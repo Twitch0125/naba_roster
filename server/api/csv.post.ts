@@ -20,7 +20,7 @@ export default eventHandler(async (event) => {
     );
     await db.transaction(async (tx) => {
       players.forEach((player) => {
-        tx.insert(playersTable).values(player).run();
+        tx.insert(playersFullTable).values(player).run();
       });
     });
   }
