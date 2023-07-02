@@ -3,9 +3,53 @@ import { sqliteTable, text, numeric, integer } from "drizzle-orm/sqlite-core";
 import Database from "better-sqlite3";
 
 const sqlite = new Database("sqlite.db");
-export const db: BetterSQLite3Database = drizzle(sqlite)
+export const db: BetterSQLite3Database = drizzle(sqlite);
 
-export const playersTable = sqliteTable("players", {
+export const playersTable = sqliteTable("players", { 
+  team_name: text("team_name"),
+  last_name: text("last_name"),
+  first_name: text("first_name"),
+  position: numeric("position" as string),
+  id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
+})
+
+export const playersBasicStatsTable = sqliteTable("players", {
+  team_name: text("team_name"),
+  last_name: text("last_name"),
+  first_name: text("first_name"),
+  id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
+  bats: numeric("bats" as string),
+  throws: numeric("throws" as string),
+  position: numeric("position" as string),
+  gb_batter_type: numeric("gb_batter_type" as string),
+  fb_batter_type: numeric("fb_batter_type" as string),
+  speed: numeric("speed" as string),
+  steal: numeric("steal" as string),
+  running: numeric("running" as string),
+  contact_pot: numeric("contact_pot" as string),
+  gap_pot: numeric("gap_pot" as string),
+  power_pot: numeric("power_pot" as string),
+  eye_pot: numeric("eye_pot" as string),
+  ks_pot: numeric("ks_pot" as string),
+  infield_range: numeric("infield_range" as string),
+  infield_error: numeric("infield_error" as string),
+  infield_arm: numeric("infield_arm" as string),
+  dp: numeric("dp" as string),
+  catcher_abil: numeric("catcher_abil" as string),
+  catcher_arm: numeric("catcher_arm" as string),
+  of_range: numeric("of_range" as string),
+  of_error: numeric("of_error" as string),
+  of_arm: numeric("of_arm" as string),
+  p_exp: numeric("p_exp" as string),
+  move_pot: numeric("move_pot" as string),
+  control_pot: numeric("control_pot" as string),
+  wp: numeric("wp" as string),
+  balk: numeric("balk" as string),
+  stamina: numeric("stamina" as string),
+  hold: numeric("hold" as string),
+});
+
+export const playersFullTable = sqliteTable("players", {
   team_name: text("team_name"),
   last_name: text("last_name"),
   first_name: text("first_name"),
