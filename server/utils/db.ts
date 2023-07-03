@@ -5,13 +5,18 @@ import Database from "better-sqlite3";
 const sqlite = new Database("sqlite.db");
 export const db: BetterSQLite3Database = drizzle(sqlite);
 
-export const playersTable = sqliteTable("players", { 
+export const teamsTable = sqliteTable("teams", {
+  id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
+  name: text("name"),
+});
+
+export const playersTable = sqliteTable("players", {
   team_name: text("team_name"),
   last_name: text("last_name"),
   first_name: text("first_name"),
   position: numeric("position" as string),
   id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
-})
+});
 
 export const playersBasicStatsTable = sqliteTable("players", {
   team_name: text("team_name"),

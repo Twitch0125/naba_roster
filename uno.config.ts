@@ -1,10 +1,11 @@
-import { defineConfig, presetUno, presetWebFonts, presetIcons } from "unocss";
+import { defineConfig, presetUno, presetWebFonts, presetIcons, transformerVariantGroup } from "unocss";
 export default defineConfig({
   content: {
     pipeline: {
       include: ["**/*.vue", "**/*.ts"],
     },
   },
+  transformers: [transformerVariantGroup()],
   presets: [
     presetUno(),
     presetIcons(),
@@ -17,9 +18,9 @@ export default defineConfig({
   ],
   shortcuts: [
     {
-      "theme.background": "bg-blue-100",
-      "theme.surface": "bg-blue-50",
-      "theme.border": "border-color-gray-800",
+      "theme.background": "bg-gray-100",
+      "theme.surface": "bg-white",
+      "theme.border": "border-color-gray-300",
       "theme.text-primary": "text-gray-900",
       "theme.primary": "bg-gray-900",
       "theme.button":

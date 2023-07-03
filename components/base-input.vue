@@ -1,29 +1,33 @@
 <script lang="ts" setup>
-const props = defineProps<{ label?: string; icon?: string }>();
+const props = defineProps<{ label?: string; icon?: string; block?: boolean }>();
 defineOptions({
   inheritAttrs: true,
 });
 const classes = computed(() => {
   const obj = {
-    input: '',
-    label: '',
+    input: "px-2.5 py-1.5 block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
+    label: "text-sm uppercase font-medium text-gray-600",
+    container: "",
   };
   if (props.icon) {
-    obj.input = "ps-9";
+    obj.input = `${obj.input} ps-9`;
+  }
+  if (props.block) {
+    obj.container = "block";
   }
 
-  return obj
+  return obj;
 });
 </script>
 <template>
-  <label>
-    <span v-if="label" class="text-sm uppercase font-medium text-gray-600">
+  <label :class="classes.container">
+    <span v-if="label" :class="classes.label">
       {{ $props.label }}
     </span>
     <div class="relative">
       <input
         v-bind="$attrs"
-        class="px-2.5 py-1.5 block outline-none text-gray-9000 font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900"
+        class=""
         :class="classes.input"
       />
       <span

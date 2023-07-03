@@ -8,7 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "drizzle:generate": "drizzle-kit generate:sqlite"
+    "drizzle:generate": "drizzle-kit generate:sqlite",
+    "drizzle:migrate": "node migrations/index.mjs"
+
   },
   "devDependencies": {
     "@iconify-json/tabler": "^1.1.80",

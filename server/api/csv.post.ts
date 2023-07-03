@@ -18,11 +18,18 @@ export default eventHandler(async (event) => {
         },
       })
     );
+    const detectedTeams = new Map();
     await db.transaction(async (tx) => {
       players.forEach((player) => {
+        detectedTeams.get(player.team_id) ||
+          detectedTeams.set(player.team_id, {
+            id: player.team_id,
+            name: player.team_name,
+          });
         tx.insert(playersFullTable).values(player).run();
       });
     });
+    db.insert(teamsTable).values(Array.from(detectedTeams.values())).run();
   }
   return sendRedirect(event, "/");
 });
