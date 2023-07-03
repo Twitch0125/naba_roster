@@ -1,4 +1,4 @@
-import { defineConfig, presetUno, presetWebFonts } from "unocss";
+import { defineConfig, presetUno, presetWebFonts, presetIcons } from "unocss";
 export default defineConfig({
   content: {
     pipeline: {
@@ -7,6 +7,7 @@ export default defineConfig({
   },
   presets: [
     presetUno(),
+    presetIcons(),
     presetWebFonts({
       provider: "bunny",
       fonts: {
@@ -18,7 +19,7 @@ export default defineConfig({
     {
       "theme.background": "bg-blue-100",
       "theme.surface": "bg-blue-50",
-      "theme.border": "border-color-gray-800 border-width-1 border-solid",
+      "theme.border": "border-color-gray-800",
       "theme.text-primary": "text-gray-900",
       "theme.primary": "bg-gray-900",
       "theme.button":

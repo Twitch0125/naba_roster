@@ -28,6 +28,9 @@ dependencies:
     version: 5.4.1
 
 devDependencies:
+  '@iconify-json/tabler':
+    specifier: ^1.1.80
+    version: 1.1.80
   '@nuxt/devtools':
     specifier: latest
     version: 0.6.6(nuxt@3.6.1)(vite@4.3.9)
@@ -821,6 +824,12 @@ packages:
 
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
+
+  /@iconify-json/tabler@1.1.80:
+    resolution: {integrity: sha512-6W+XoTaoD8CDUr209ik9slyRmm3wliG8B3yp0qKc106wLCkHgfYt+6cjwY24qNBdRkqmuOYc4cfJ+IE3F8RWRg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
 
   /@iconify/types@2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
