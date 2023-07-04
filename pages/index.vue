@@ -1,20 +1,14 @@
 <script lang="ts" setup>
 const search = useSearchState();
-const { data: total } = useNuxtData("players-total");
+const { data: total } = useLazyFetch("/api/players-total", { server: false });
 await useFetch("/api/players", {
   key: "players",
   query: {
     search: search, //when search is updated this request will re-run
   },
-  onResponse(ctx) {
-    total.value = Number(ctx.response.headers.get("x-total-count"));
-  },
 });
 await useFetch("/api/teams", {
-  key: "teams",
-  query: {
-    search: search, //when search is updated this request will re-run
-  },
+  key: "teams"
 });
 const { data: players } = useNuxtData("players");
 const { data: teams } = useNuxtData("teams");
@@ -40,10 +34,16 @@ const updateSearch = useDebounceFn((event: Event) => {
         />
       </div>
       <div class="md:col-start-4">
-        <BaseSelect label="Team" value-attribute="id" option-attribute="name" :options="teams" />
-        
+        <BaseSelect
+          label="Team"
+          value-attribute="id"
+          option-attribute="name"
+          :options="teams"
+        />
       </div>
-      <div class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"></div>
+      <div
+        class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"
+      ></div>
       <NuxtLink
         v-for="player of players"
         :key="player.id"
@@ -62,8 +62,6 @@ const updateSearch = useDebounceFn((event: Event) => {
         </div>
       </NuxtLink>
     </div>
-    <div class="text-gray-600 mt-6">
-      {{ total }} total players
-    </div>
+    <div class="text-gray-600 mt-6">{{ total }} total players</div>
   </div>
 </template>

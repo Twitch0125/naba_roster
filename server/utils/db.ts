@@ -10,6 +10,14 @@ export const teamsTable = sqliteTable("teams", {
   name: text("name"),
 });
 
+
+export const playersFTSTable = sqliteTable("players_fts", {
+  last_name: text("last_name"),
+  first_name: text("first_name"),
+  team_name: text("team_name"),
+  id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
+});
+
 export const playersTable = sqliteTable("players", {
   team_name: text("team_name"),
   last_name: text("last_name"),

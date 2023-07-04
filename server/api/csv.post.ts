@@ -28,6 +28,14 @@ export default eventHandler(async (event) => {
             name: player.team_name,
           });
         tx.insert(playersFullTable).values(player).run();
+        tx.insert(playersFTSTable)
+          .values({
+            id: player.id,
+            first_name: player.first_name,
+            last_name: player.last_name,
+            team_name: player.team_name,
+          })
+          .run();
       });
     });
     db.insert(teamsTable).values(Array.from(detectedTeams.values())).run();
