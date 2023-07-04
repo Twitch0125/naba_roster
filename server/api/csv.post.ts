@@ -7,6 +7,7 @@ export default eventHandler(async (event) => {
     const readbleStream = Readable.from(data);
     const players = [];
     //clear out the table
+    db.delete(teamsTable).run();
     db.delete(playersTable).run();
     await parseCSV(readbleStream).pipeTo(
       new WritableStream({
