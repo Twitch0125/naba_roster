@@ -40,11 +40,8 @@ const updateSearch = useDebounceFn((event: Event) => {
         />
       </div>
       <div class="md:col-start-4">
-        <select>
-          <option v-for="team of teams" :key="team.id" :value="team.id">
-            {{ team.name }}
-          </option>
-        </select>
+        <BaseSelect label="Team" value-attribute="id" option-attribute="name" :options="teams" />
+        
       </div>
       <div class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"></div>
       <NuxtLink
