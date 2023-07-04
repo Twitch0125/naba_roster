@@ -54,6 +54,8 @@ export const playersBasicStatsTable = sqliteTable("players", {
   of_error: numeric("of_error" as string),
   of_arm: numeric("of_arm" as string),
   p_exp: numeric("p_exp" as string),
+  stuff_pot: numeric("stuff_pot" as string),
+  stuff_overall: numeric("stuff_overall" as string),
   move_pot: numeric("move_pot" as string),
   control_pot: numeric("control_pot" as string),
   wp: numeric("wp" as string),

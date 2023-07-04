@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 const search = useSearchState();
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
-await useFetch("/api/players", {
+await useLazyFetch("/api/players", {
   key: "players",
   query: {
     search: search, //when search is updated this request will re-run
   },
 });
-await useFetch("/api/teams", {
+await useLazyFetch("/api/teams", {
   key: "teams"
 });
 const { data: players } = useNuxtData("players");
@@ -15,7 +15,7 @@ const { data: teams } = useNuxtData("teams");
 
 const updateSearch = useDebounceFn((event: Event) => {
   search.value = event.target!.value;
-}, 500);
+}, 200);
 </script>
 <template>
   <div class="mt-12 mx-12">

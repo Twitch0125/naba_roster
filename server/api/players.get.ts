@@ -15,7 +15,7 @@ export default eventHandler((event) => {
       } ORDER BY last_name ASC`
     );
   } else {
-    data = db.select().from(playersFTSTable).all();
+    data = db.select().from(playersFTSTable).limit(50).all();
   }
   return data;
 });
