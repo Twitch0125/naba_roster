@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const search = ref("");
+const search = useSearchState();
 const { data: total } = useNuxtData("players-total");
 await useFetch("/api/players", {
   key: "players",
@@ -25,8 +25,8 @@ const updateSearch = useDebounceFn((event: Event) => {
 </script>
 <template>
   <div class="mt-12 mx-12">
-    <div class="grid gap-3 grid-cols-5">
-      <div class="col-span-4">
+    <div class="grid gap-3 grid-cols-1 sm:grid-cols-3 md:grid-cols-5">
+      <div class="md:(col-span-2 col-start-2)">
         <BaseInput
           id="search"
           block
@@ -39,14 +39,14 @@ const updateSearch = useDebounceFn((event: Event) => {
           @input="updateSearch"
         />
       </div>
-      <div>
+      <div class="md:col-start-4">
         <select>
           <option v-for="team of teams" :key="team.id" :value="team.id">
             {{ team.name }}
           </option>
         </select>
       </div>
-      <div class="col-span-5 h-0 theme.border border-t-1"></div>
+      <div class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"></div>
       <NuxtLink
         v-for="player of players"
         :key="player.id"

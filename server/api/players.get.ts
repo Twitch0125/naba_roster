@@ -8,7 +8,7 @@ export default eventHandler((event) => {
     })
   );
   const nameClause = query.search
-    ? like(playersTable.first_name, query.search)
+    ? like(playersTable.first_name, `%${query.search}%`)
     : undefined;
   const players = db
     .select()
