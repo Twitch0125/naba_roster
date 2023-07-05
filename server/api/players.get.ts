@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { sql, asc } from "drizzle-orm";
 import { validateQuery, Type } from "h3-typebox";
 export default eventHandler((event) => {
   const query = validateQuery(
@@ -15,7 +15,12 @@ export default eventHandler((event) => {
       } ORDER BY last_name ASC`
     );
   } else {
-    data = db.select().from(playersFTSTable).limit(50).all();
+    data = db
+      .select()
+      .from(playersFTSTable)
+      .orderBy(asc(playersFTSTable.last_name))
+      .limit(50)
+      .all();
   }
   return data;
 });
