@@ -2,9 +2,8 @@
 import { useRouteQuery } from "@vueuse/router";
 const searchQuery = useRouteQuery("search", "");
 const search = refDebounced(searchQuery, 300);
-const team = useRouteQuery<string>("team", "any", {
-  transform: (val) => `${val}`,
-});
+const team = useRouteQuery<string>("team", "any");
+team.value = "any";
 
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
 await Promise.all([
@@ -29,6 +28,9 @@ const teamOptions = computed(() => [
 <template>
   <div class="mt-12 mx-12">
     <div class="grid gap-3 grid-cols-1 sm:grid-cols-3 md:grid-cols-5">
+      <h1 class="text-xl lg:text-3xl font-display self-end">
+        North American Baseball Association
+      </h1>
       <div class="md:(col-span-2 col-start-2)">
         <BaseInput
           id="search"
@@ -60,10 +62,9 @@ const teamOptions = computed(() => [
         class="hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
       >
         <div class="font-medium">
-          {{ player.first_name }}
-          {{ player.last_name }}
-          <span class="font-bold text-sm text-gray-500">
-            {{ getPosition(player.position)?.abbreviation || player.position }}
+          <span>
+            {{ player.first_name }}
+            {{ player.last_name }}
           </span>
         </div>
         <div class="text-sm text-gray-600">
@@ -73,7 +74,7 @@ const teamOptions = computed(() => [
           <HeadlessPopover class="relative">
             <HeadlessPopoverButton>
               <button
-                class="theme.button bg-transparent px-0 theme.text-primary opacity-70"
+                class="theme.button-text opacity-70 bg-transparent px-0"
               >
                 Preview
               </button>

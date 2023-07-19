@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-const props = defineProps<{ label?: string; icon?: string; block?: boolean }>();
-const model = defineModel();
+const props = defineProps<{ label?: string; icon?: string; block?: boolean, modelValue: any }>();
+const model = useVModel(props);
 const classes = computed(() => {
   const obj = {
     input:
-      "px-2.5 py-1.5 block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
+      "px-2.5 py-1.5 h-38px block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
     label: "text-sm uppercase font-medium text-gray-600",
     container: "",
   };
