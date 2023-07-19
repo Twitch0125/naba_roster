@@ -22,7 +22,7 @@
     "drizzle-kit": "^0.19.3",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
-    "nuxt": "^3.6.3",
+    "nuxt": "^3.6.5",
     "typescript": "latest",
     "unocss": "^0.53.5"
   },
