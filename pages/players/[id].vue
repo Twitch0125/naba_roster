@@ -11,10 +11,12 @@ const ratings = {
   movement: scale(player.move_pot),
   control: scale(player.control_pot),
 };
-
+defineOgImage({
+  title: `${player?.first_name} ${player?.last_name}`,
+});
 </script>
 <template>
-  <div class="mt-12 mx-12">
+  <div class="mt-12 mx-12 test">
     <h1 class="text-lg font-bold theme.text-primary">
       {{ player.first_name }} {{ player.last_name }}
       <small class="font-bold text-sm text-gray-600">
@@ -71,5 +73,3 @@ const ratings = {
     </div>
   </div>
 </template>
-
-<style></style>
