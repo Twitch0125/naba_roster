@@ -8,5 +8,5 @@ export default defineCachedEventHandler(
       .get();
     return count;
   },
-  { maxAge: 60 * 60 * 24 }
+  { maxAge: 60 * 10 }
 );

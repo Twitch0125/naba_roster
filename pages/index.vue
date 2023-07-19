@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 const search = useSearchState();
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
-await useLazyFetch("/api/players", {
-  key: "players",
-  query: {
-    search: search, //when search is updated this request will re-run
-  },
-});
-await useLazyFetch("/api/teams", {
-  key: "teams"
-});
+await Promise.all([
+  useFetch("/api/players", {
+    key: "players",
+    query: {
+      search: search, //when search is updated this request will re-run
+    },
+  }),
+  useFetch("/api/teams", {
+    key: "teams",
+  }),
+]);
 const { data: players } = useNuxtData("players");
 const { data: teams } = useNuxtData("teams");
-
 const updateSearch = useDebounceFn((event: Event) => {
   search.value = event.target!.value;
 }, 200);

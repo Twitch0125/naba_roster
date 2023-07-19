@@ -38,6 +38,7 @@ export default eventHandler(async (event) => {
           .run();
       });
     });
+    detectedTeams.set(0, { id: 0, name: "Free Agents" });
     db.insert(teamsTable).values(Array.from(detectedTeams.values())).run();
   }
   return sendRedirect(event, "/");
