@@ -6,14 +6,13 @@ const props = defineProps<{
   valueAttribute: string;
   optionAttribute: string;
   options: {}[];
+  modelValue: any
 }>();
-defineOptions({
-  inheritAttrs: true,
-});
+const model = useVModel(props);
 const classes = computed(() => {
   const obj = {
     input:
-      "px-2.5 py-1.5 block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
+      "px-2.5 py-1.5 h-38px block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
     label: "text-sm uppercase font-medium text-gray-600",
     container: "",
   };
@@ -23,7 +22,6 @@ const classes = computed(() => {
   if (props.block) {
     obj.container = "block";
   }
-
   return obj;
 });
 </script>
@@ -33,7 +31,7 @@ const classes = computed(() => {
       {{ $props.label }}
     </span>
     <div class="relative">
-      <select v-bind="$attrs" class="" :class="classes.input">
+      <select v-model="model" v-bind="$attrs" class="" :class="classes.input">
         <!-- eslint-disable-next-line vue/require-v-for-key -->
         <option
           v-for="option of $props.options"

@@ -15,6 +15,7 @@ export const playersFTSTable = sqliteTable("players_fts", {
   last_name: text("last_name"),
   first_name: text("first_name"),
   team_name: text("team_name"),
+  team_id: numeric("team_id" as string),
   id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
 });
 

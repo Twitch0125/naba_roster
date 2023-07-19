@@ -9,31 +9,33 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "drizzle:generate": "drizzle-kit generate:sqlite",
-    "drizzle:migrate": "node migrations/index.mjs"
+    "drizzle:migrate": "db=sqlite.db node migrations/index.mjs"
   },
   "devDependencies": {
-    "@iconify-json/tabler": "^1.1.80",
+    "@iconify-json/tabler": "^1.1.81",
     "@nuxt/devtools": "latest",
     "@nuxt/eslint-config": "^0.1.1",
-    "@types/node": "^18.16.18",
+    "@types/node": "^18.16.19",
     "@types/papaparse": "^5.3.7",
-    "@unocss/nuxt": "^0.53.4",
-    "@unocss/reset": "^0.53.4",
+    "@unocss/nuxt": "^0.53.5",
+    "@unocss/reset": "^0.53.5",
     "drizzle-kit": "^0.19.3",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
-    "nuxt": "^3.6.1",
+    "nuxt": "^3.6.3",
     "typescript": "latest",
-    "unocss": "^0.53.4"
+    "unocss": "^0.53.5"
   },
   "dependencies": {
     "@types/better-sqlite3": "^7.6.4",
     "@vueuse/core": "^10.2.1",
     "@vueuse/nuxt": "^10.2.1",
+    "@vueuse/router": "^10.2.1",
     "better-sqlite3": "^8.4.0",
     "drizzle-orm": "^0.27.0",
     "h3-typebox": "^0.6.0",
-    "nuxt-og-image": "^2.0.4",
+    "nuxt-headlessui": "^1.1.4",
+    "nuxt-og-image": "^2.0.5",
     "papaparse": "^5.4.1"
   }
 }

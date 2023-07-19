@@ -1,4 +1,5 @@
-export const scale = (value: number) => {
+export const scale = (value?: number) => {
+  if(!value) return 0
   //value is on a number on  scale from 0 to 250
   //we need to translate it to a scale from 20 to 80
   const max = 80;

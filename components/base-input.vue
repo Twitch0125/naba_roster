@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-const props = defineProps<{ label?: string; icon?: string; block?: boolean }>();
-defineOptions({
-  inheritAttrs: true,
-});
+const props = defineProps<{ label?: string; icon?: string; block?: boolean, modelValue: any }>();
+const model = useVModel(props);
 const classes = computed(() => {
   const obj = {
-    input: "px-2.5 py-1.5 block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
+    input:
+      "px-2.5 py-1.5 h-38px block outline-none text-gray-900 shadow-sm font-medium theme.surface w-full rounded theme.border border-1 focus:ring ring-blue-900",
     label: "text-sm uppercase font-medium text-gray-600",
     container: "",
   };
@@ -25,11 +24,7 @@ const classes = computed(() => {
       {{ $props.label }}
     </span>
     <div class="relative">
-      <input
-        v-bind="$attrs"
-        class=""
-        :class="classes.input"
-      />
+      <input v-model="model" v-bind="$attrs" class="" :class="classes.input" />
       <span
         v-if="$props.icon"
         class="absolute inset-y-0 start-0 ps-2.5 flex theme.text-primary items-center justify-center"
