@@ -33,6 +33,7 @@
     "better-sqlite3": "^8.4.0",
     "drizzle-orm": "^0.27.0",
     "h3-typebox": "^0.6.0",
+    "nuxt-headlessui": "^1.1.4",
     "nuxt-og-image": "^2.0.5",
     "papaparse": "^5.4.1"
   }

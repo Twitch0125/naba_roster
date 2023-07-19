@@ -16,7 +16,7 @@ const { data: players } = useNuxtData("players");
 const { data: teams } = useNuxtData("teams");
 const updateSearch = useDebounceFn((event: Event) => {
   search.value = event.target!.value;
-}, 200);
+}, 100);
 </script>
 <template>
   <div class="mt-12 mx-12">
@@ -49,7 +49,7 @@ const updateSearch = useDebounceFn((event: Event) => {
         v-for="player of players"
         :key="player.id"
         :to="`/players/${player.id}`"
-        class="theme.surface theme.border px-2.5 py-1.5 border-1 rounded focus:ring ring-blue-900"
+        class="hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
       >
         <div class="font-medium">
           {{ player.first_name }}
@@ -61,6 +61,31 @@ const updateSearch = useDebounceFn((event: Event) => {
         <div class="text-sm text-gray-600">
           {{ player.team_name }}
         </div>
+        <ClientOnly>
+          <HeadlessPopover class="relative">
+            <HeadlessPopoverButton>
+              <button
+                class="theme.button bg-transparent px-0 theme.text-primary opacity-70"
+              >
+                Preview
+              </button>
+            </HeadlessPopoverButton>
+            <transition
+              enter-active-class="transition duration-200 ease-out"
+              enter-from-class="translate-y-1 opacity-0"
+              enter-to-class="translate-y-0 opacity-100"
+              leave-active-class="transition duration-150 ease-in"
+              leave-from-class="translate-y-0 opacity-100"
+              leave-to-class="translate-y-1 opacity-0"
+            >
+              <HeadlessPopoverPanel
+                class="bg-white theme.border border-1 absolute z-10 left-1/2 -translate-x-1/2 transform p-3 w-sm shadow rounded"
+              >
+                <PlayerPreview class="p-4" :player-id="player.id" />
+              </HeadlessPopoverPanel>
+            </transition>
+          </HeadlessPopover>
+        </ClientOnly>
       </NuxtLink>
     </div>
     <div class="text-gray-600 mt-6">{{ total }} total players</div>
