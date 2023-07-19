@@ -1,11 +1,18 @@
 <script lang="ts" setup>
-const search = useSearchState();
+import { useRouteQuery } from "@vueuse/router";
+const searchQuery = useRouteQuery("search", "");
+const search = refDebounced(searchQuery, 300);
+const team = useRouteQuery<string>("team", "any", {
+  transform: (val) => `${val}`,
+});
+
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
 await Promise.all([
   useFetch("/api/players", {
     key: "players",
     query: {
-      search: search, //when search is updated this request will re-run
+      search, //when search is updated this request will re-run
+      team, //when team is updated this request will re-run
     },
   }),
   useFetch("/api/teams", {
@@ -14,9 +21,10 @@ await Promise.all([
 ]);
 const { data: players } = useNuxtData("players");
 const { data: teams } = useNuxtData("teams");
-const updateSearch = useDebounceFn((event: Event) => {
-  search.value = event.target!.value;
-}, 100);
+const teamOptions = computed(() => [
+  { id: "any", name: "Any" },
+  ...teams.value,
+]);
 </script>
 <template>
   <div class="mt-12 mx-12">
@@ -24,22 +32,22 @@ const updateSearch = useDebounceFn((event: Event) => {
       <div class="md:(col-span-2 col-start-2)">
         <BaseInput
           id="search"
+          v-model="searchQuery"
           block
           label="Search for players"
           type="search"
           name="search"
           placeholder="Search"
           icon="i-tabler-search"
-          :value="search"
-          @input="updateSearch"
         />
       </div>
       <div class="md:col-start-4">
         <BaseSelect
+          v-model="team"
           label="Team"
           value-attribute="id"
           option-attribute="name"
-          :options="teams"
+          :options="teamOptions"
         />
       </div>
       <div

@@ -4,6 +4,9 @@ export default defineNuxtConfig({
   experimental:{
     componentIslands: true
   },
+  vue:{
+    defineModel: true
+  },
   modules: ["@unocss/nuxt", "@vueuse/nuxt", 'nuxt-og-image', 'nuxt-headlessui'],
-  css: ['@unocss/reset/tailwind.css']
+  css: ['@unocss/reset/tailwind.css'],
 });

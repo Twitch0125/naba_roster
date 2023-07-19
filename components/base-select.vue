@@ -7,9 +7,7 @@ const props = defineProps<{
   optionAttribute: string;
   options: {}[];
 }>();
-defineOptions({
-  inheritAttrs: true,
-});
+const model = defineModel();
 const classes = computed(() => {
   const obj = {
     input:
@@ -23,7 +21,6 @@ const classes = computed(() => {
   if (props.block) {
     obj.container = "block";
   }
-
   return obj;
 });
 </script>
@@ -33,7 +30,7 @@ const classes = computed(() => {
       {{ $props.label }}
     </span>
     <div class="relative">
-      <select v-bind="$attrs" class="" :class="classes.input">
+      <select v-model="model" v-bind="$attrs" class="" :class="classes.input">
         <!-- eslint-disable-next-line vue/require-v-for-key -->
         <option
           v-for="option of $props.options"
