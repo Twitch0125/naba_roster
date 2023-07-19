@@ -3,6 +3,10 @@ import { useRouteQuery } from "@vueuse/router";
 const searchQuery = useRouteQuery("search", "");
 const search = refDebounced(searchQuery, 300);
 const team = useRouteQuery<string>("team", "any");
+function resetFilters() {
+  searchQuery.value = "";
+  team.value = "any";
+}
 team.value = "any";
 
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
@@ -36,11 +40,11 @@ function preloadPlayer(id) {
 </script>
 <template>
   <div class="mt-12 mx-12">
-    <div class="grid gap-3 grid-cols-1 sm:grid-cols-3 md:grid-cols-5">
-      <h1 class="text-xl lg:text-3xl font-display self-end">
+    <div class="grid gap-3 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 items-end">
+      <h1 class="text-xl lg:text-3xl font-display">
         North American Baseball Association
       </h1>
-      <div class="md:(col-span-2 col-start-2)">
+      <div class="md:(col-span-2)">
         <BaseInput
           id="search"
           v-model="searchQuery"
@@ -52,16 +56,22 @@ function preloadPlayer(id) {
           icon="i-tabler-search"
         />
       </div>
-      <div class="md:col-start-4 inline-flex items-end">
+      <div class="md:col-start-4">
         <BaseSelect
           v-model="team"
+          class="col-span-3"
           label="Team"
           value-attribute="id"
           option-attribute="name"
           :options="teamOptions"
         />
-        <button class="theme.button-text" @click="()=>{searchQuery = ''; team = 'any'}">Clear</button>
       </div>
+      <button
+        class="theme.button-text justify-self-start"
+        @click="() => resetFilters()"
+      >
+        Clear
+      </button>
       <div
         class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"
       ></div>
