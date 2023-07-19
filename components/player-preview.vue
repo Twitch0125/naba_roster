@@ -1,25 +1,22 @@
 <script lang="ts" setup>
 const props = defineProps<{ playerId: number | string }>();
 const playerKey = `player_${props.playerId}`;
-await useFetch(`/api/player/${props.playerId}`, {
-  key: playerKey,
-});
+//a page should be sure to set this player key
+const { data: player } = useNuxtData(playerKey);
 
-const { data } = useNuxtData(playerKey);
-const player = toValue(data);
-const ratings = {
-  contact: scale(player.contact_pot),
-  gap: scale(player.gap_pot),
-  power: scale(player.power_pot),
-  eye: scale(player.eye_pot),
-  ks: scale(player.ks_pot),
-  stuff: scale(player.stuff_pot),
-  movement: scale(player.move_pot),
-  control: scale(player.control_pot),
-};
+const ratings = computed(() => ({
+  contact: scale(player.value.contact_pot),
+  gap: scale(player.value.gap_pot),
+  power: scale(player.value.power_pot),
+  eye: scale(player.value.eye_pot),
+  ks: scale(player.value.ks_pot),
+  stuff: scale(player.value.stuff_pot),
+  movement: scale(player.value.move_pot),
+  control: scale(player.value.control_pot),
+}));
 </script>
 <template>
-  <div>
+  <div v-if="player">
     <h1 class="text-lg font-bold theme.text-primary mb-3">
       {{ player.first_name }} {{ player.last_name }}
       <small class="font-bold text-sm text-gray-600">

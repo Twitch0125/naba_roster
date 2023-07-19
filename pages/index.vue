@@ -24,6 +24,15 @@ const teamOptions = computed(() => [
   { id: "any", name: "Any" },
   ...teams.value,
 ]);
+function preloadPlayer(id) {
+  const playerKey = `player_${id}`;
+  const { data: player } = useNuxtData(playerKey);
+
+  !player.value &&
+    useFetch(`/api/player/${id}`, {
+      key: playerKey,
+    });
+}
 </script>
 <template>
   <div class="mt-12 mx-12">
@@ -43,7 +52,7 @@ const teamOptions = computed(() => [
           icon="i-tabler-search"
         />
       </div>
-      <div class="md:col-start-4">
+      <div class="md:col-start-4 inline-flex items-end">
         <BaseSelect
           v-model="team"
           label="Team"
@@ -51,6 +60,7 @@ const teamOptions = computed(() => [
           option-attribute="name"
           :options="teamOptions"
         />
+        <button class="theme.button-text" @click="()=>{searchQuery = ''; team = 'any'}">Clear</button>
       </div>
       <div
         class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"
@@ -59,7 +69,9 @@ const teamOptions = computed(() => [
         v-for="player of players"
         :key="player.id"
         :to="`/players/${player.id}`"
+        prefetch
         class="hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
+        @mouseover.once="() => preloadPlayer(player.id)"
       >
         <div class="font-medium">
           <span>
@@ -71,11 +83,14 @@ const teamOptions = computed(() => [
           {{ player.team_name }}
         </div>
         <ClientOnly>
+          <template #fallback>
+            <button class="theme.button-text opacity-70 bg-transparent px-0">
+              Preview
+            </button>
+          </template>
           <HeadlessPopover class="relative">
             <HeadlessPopoverButton>
-              <button
-                class="theme.button-text opacity-70 bg-transparent px-0"
-              >
+              <button class="theme.button-text opacity-70 bg-transparent px-0">
                 Preview
               </button>
             </HeadlessPopoverButton>
