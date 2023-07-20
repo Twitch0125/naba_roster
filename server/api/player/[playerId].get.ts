@@ -7,5 +7,6 @@ export default defineEventHandler(async (event) => {
     .from(playersFullTable)
     .where(eq(playersFullTable.id, params.playerId))
     .get();
+  setHeader(event, 'ETag', player.id)
   return player;
 });
