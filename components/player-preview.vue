@@ -1,10 +1,11 @@
 <script lang="ts" setup>
+import { PlayerFull } from "~/server/utils/db";
 const props = defineProps<{ playerId: number | string }>();
 const playerKey = `player_${props.playerId}`;
 //a page should be sure to set this player key
-const { data: player } = useNuxtData(playerKey);
+const { data: player } = useNuxtData<PlayerFull>(playerKey);
 
-const ratings = computed(() => ({
+const potentialRatings = computed(() => ({
   contact: scale(player.value.contact_pot),
   gap: scale(player.value.gap_pot),
   power: scale(player.value.power_pot),
@@ -13,6 +14,42 @@ const ratings = computed(() => ({
   stuff: scale(player.value.stuff_pot),
   movement: scale(player.value.move_pot),
   control: scale(player.value.control_pot),
+}));
+
+function getAvg(a: number, b: number) {
+  return (a + b) / 2;
+}
+const overallRatings = computed(() => ({
+  contact: scale(getAvg(player.value.contact_vl, player.value.contract_vr)),
+  gap: scale(getAvg(player.value.gap_vl, player.value.gap_vr)),
+  power: scale(getAvg(player.value.power_vl, player.value.power_vr)),
+  eye: scale(getAvg(player.value.eye_vl, player.value.eye_vr)),
+  ks: scale(getAvg(player.value.avoid_kvl, player.value.ks_vr)),
+  stuff: scale(player.value?.stuff_overall),
+  movement: scale(getAvg(player.value.ove_vl, player.value.movement_vr)),
+  control: scale(getAvg(player.value.control_vl, player.value.control_vr)),
+}));
+
+const vsRRatings = computed(() => ({
+  contact: scale(player.value.contract_vr),
+  gap: scale(player.value.gap_vr),
+  power: scale(player.value.power_vr),
+  eye: scale(player.value.eye_vr),
+  ks: scale(player.value.ks_vr),
+  stuff: scale(player.value?.stuff_overall * player.value?.["stuff_r/l_split"]), //split here is like 1.0 or 0.9123 or 1.123. IDK which is actually R or L
+  movement: scale(player.value.movement_vr),
+  control: scale(player.value.control_vr),
+}));
+
+const vsLRatings = computed(() => ({
+  contact: scale(player.value.contact_vl),
+  gap: scale(player.value.gap_vl),
+  power: scale(player.value.power_vl),
+  eye: scale(player.value.eye_vl),
+  ks: scale(player.value.avoid_kvl),
+  stuff: scale(player.value?.stuff_overall * player.value?.["stuff_r/l_split"]), //split here is like 1.0 or 0.9123 or 1.123. IDK which is actually R or L
+  movement: scale(player.value.ove_vl),
+  control: scale(player.value.control_vl),
 }));
 </script>
 <template>
@@ -24,49 +61,19 @@ const ratings = computed(() => ({
       </small>
     </h1>
     <h2 class="font-bold text-base">Batting</h2>
-    <div class="grid grid-cols-2 max-w-sm theme.surface py-3 rounded">
-      <!-- headers -->
-      <div class="text-sm font-bold uppercase text-gray-600">rating</div>
-      <div class="text-sm font-bold uppercase text-gray-600">potential</div>
-
-      <!-- body -->
-      <div>contact</div>
-      <div :class="findColor(ratings.contact)">
-        {{ ratings.contact }}
-      </div>
-      <div>gap</div>
-      <div :class="findColor(ratings.gap)">
-        {{ ratings.gap }}
-      </div>
-      <div>eye</div>
-      <div :class="findColor(ratings.eye)">
-        {{ ratings.eye }}
-      </div>
-      <div>avoid k</div>
-      <div :class="findColor(ratings.ks)">
-        {{ ratings.ks }}
-      </div>
-    </div>
+    <BattingList
+      :potential="potentialRatings"
+      :overall="overallRatings"
+      :vs-l="vsLRatings"
+      :vs-r="vsRRatings"
+    />
     <h2 class="font-bold text-base">Pitching</h2>
-    <div class="grid grid-cols-2 max-w-sm theme.surface py-3 rounded">
-      <!-- headers -->
-      <div class="text-sm font-bold uppercase text-gray-600">rating</div>
-      <div class="text-sm font-bold uppercase text-gray-600">potential</div>
-
-      <!-- body -->
-      <div>stuff</div>
-      <div :class="findColor(ratings.stuff)">
-        {{ ratings.stuff }}
-      </div>
-      <div>movement</div>
-      <div :class="findColor(ratings.movement)">
-        {{ ratings.movement }}
-      </div>
-      <div>control</div>
-      <div :class="findColor(ratings.control)">
-        {{ ratings.control }}
-      </div>
-    </div>
+    <PitchingList
+      :potential="potentialRatings"
+      :overall="overallRatings"
+      :vs-l="vsLRatings"
+      :vs-r="vsRRatings"
+    />
   </div>
 </template>
 

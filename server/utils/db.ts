@@ -1,5 +1,6 @@
 import { drizzle, BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import { sqliteTable, text, numeric, integer } from "drizzle-orm/sqlite-core";
+import { InferModel } from "drizzle-orm";
 import Database from "better-sqlite3";
 
 const sqlite = new Database("sqlite.db");
@@ -9,7 +10,6 @@ export const teamsTable = sqliteTable("teams", {
   id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
   name: text("name"),
 });
-
 
 export const playersFTSTable = sqliteTable("players_fts", {
   last_name: text("last_name"),
@@ -27,6 +27,7 @@ export const playersTable = sqliteTable("players", {
   id: numeric("id" as string).primaryKey(), //if "as string" isn't here then the typescript language server grinds to a halt
 });
 
+export type PlayerBasic = InferModel<typeof playersFullTable>
 export const playersBasicStatsTable = sqliteTable("players", {
   team_name: text("team_name"),
   last_name: text("last_name"),
@@ -65,6 +66,7 @@ export const playersBasicStatsTable = sqliteTable("players", {
   hold: numeric("hold" as string),
 });
 
+export type PlayerFull = InferModel<typeof playersFullTable>
 export const playersFullTable = sqliteTable("players", {
   team_name: text("team_name"),
   last_name: text("last_name"),
