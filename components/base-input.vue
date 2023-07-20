@@ -1,5 +1,10 @@
 <script lang="ts" setup>
-const props = defineProps<{ label?: string; icon?: string; block?: boolean, modelValue: any }>();
+const props = defineProps<{
+  label?: string;
+  icon?: string;
+  block?: boolean;
+  modelValue: any;
+}>();
 const model = useVModel(props);
 const classes = computed(() => {
   const obj = {
