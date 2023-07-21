@@ -6,9 +6,6 @@ const { data: player } = useNuxtData(playerKey);
   (await useFetch(`/api/player/${id}`, {
     key: playerKey,
   }));
-defineOgImage({
-  title: `${player?.first_name} ${player?.last_name}`,
-});
 </script>
 <template>
   <div class="m-12">

@@ -22,7 +22,7 @@
     "drizzle-kit": "^0.19.3",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
-    "nuxt": "^3.6.5",
+    "nuxt": "^3.5.0",
     "typescript": "latest",
     "unocss": "^0.53.5"
   },
@@ -35,7 +35,6 @@
     "drizzle-orm": "^0.27.0",
     "h3-typebox": "^0.6.0",
     "nuxt-headlessui": "^1.1.4",
-    "nuxt-og-image": "^2.0.5",
     "papaparse": "^5.4.1"
   }
 }
