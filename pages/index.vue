@@ -81,20 +81,20 @@ function preloadPlayer(id) {
         </ASelect>
       </div>
       <button
-        class="theme.button-text justify-self-start"
+        class="justify-self-start"
         @click="() => resetFilters()"
       >
         Clear
       </button>
       <div
-        class="h-0 theme.border border-t-1 sm:col-span-3 md:col-span-5"
+        class="h-0 border-t-1 sm:col-span-3 md:col-span-5"
       ></div>
       <NuxtLink
         v-for="player of players"
         :key="`list-${player.id}`"
         :to="`/players/${player.id}`"
         prefetch
-        class="text-black hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
+        class="text-black hover:(bg-gray-50 shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
         @mouseover.once="() => preloadPlayer(player.id)"
       >
         <div class="font-medium">

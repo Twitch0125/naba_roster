@@ -54,7 +54,7 @@ const vsLRatings = computed(() => ({
 </script>
 <template>
   <div v-if="player">
-    <h1 class="text-lg font-bold theme.text-primary mb-3">
+    <h1 class="text-lg font-bold mb-3">
       {{ player.first_name }} {{ player.last_name }}
       <small class="font-bold text-sm text-light-emphasis">
         {{ getPosition(player.position)?.abbreviation }}
