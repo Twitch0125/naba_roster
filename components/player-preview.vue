@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { P } from "drizzle-orm/db.d-187282be";
 import { PlayerFull } from "~/server/utils/db";
 const props = defineProps<{ playerId: number | string }>();
 const playerKey = `player_${props.playerId}`;
@@ -51,6 +52,18 @@ const vsLRatings = computed(() => ({
   movement: scale(player.value.ove_vl),
   control: scale(player.value.control_vl),
 }));
+
+const { copy } = useClipboard();
+const copyBtnText = ref("Share");
+async function copyPlayerUrl() {
+  await copy(
+    `${location.protocol}//${location.host}/players/${props.playerId}`
+  );
+  copyBtnText.value = "Copied!";
+  setTimeout(() => {
+    copyBtnText.value = "Share";
+  }, 2000);
+}
 </script>
 <template>
   <div v-if="player">
@@ -59,6 +72,16 @@ const vsLRatings = computed(() => ({
       <small class="font-bold text-sm text-light-emphasis">
         {{ getPosition(player.position)?.abbreviation }}
       </small>
+      <ABtn
+        type="button"
+        class="text-sm"
+        color="gray"
+        variant="text"
+        append-icon="i-tabler-link"
+        @click="() => copyPlayerUrl()"
+      >
+        {{ copyBtnText }}
+      </ABtn>
     </h1>
     <h2 class="font-bold text-base">Batting</h2>
     <BattingList

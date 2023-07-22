@@ -23,20 +23,20 @@ await Promise.all([
         title: team.name,
         value: team.name,
         id: `team-option-${team.id}`,
-        apiValue: team.id
+        apiValue: team.id,
       }));
     },
   }),
 ]);
 
-const { data: players } = useNuxtData("players")
-const { data: teams } = useNuxtData("teams")
+const { data: players } = useNuxtData("players");
+const { data: teams } = useNuxtData("teams");
 
 const anyValue = {
   value: "Any",
   title: "Any",
   id: "team-option-any",
-  apiValue: 'any'
+  apiValue: "any",
 };
 const selectedTeam = ref(anyValue.value);
 const teamApiValueMap = teams.value?.reduce((acc, team) => {
@@ -80,39 +80,31 @@ function preloadPlayer(id) {
         >
         </ASelect>
       </div>
-      <button
-        class="justify-self-start"
-        @click="() => resetFilters()"
-      >
+      <button class="justify-self-start" @click="() => resetFilters()">
         Clear
       </button>
-      <div
-        class="h-0 border-t-1 sm:col-span-3 md:col-span-5"
-      ></div>
-      <NuxtLink
+      <div class="h-0 border-t-1 sm:col-span-3 md:col-span-5"></div>
+      <ACard
         v-for="player of players"
         :key="`list-${player.id}`"
-        :to="`/players/${player.id}`"
-        prefetch
-        class="text-black hover:(bg-gray-50 shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
+        class="shadow-none hover:(bg-gray-100 shadow-sm)"
         @mouseover.once="() => preloadPlayer(player.id)"
       >
-        <div class="font-medium">
-          <span>
-            {{ player.first_name }}
-            {{ player.last_name }}
-          </span>
-        </div>
-        <div class="text-sm text-medium-emphasis">
-          {{ player.team_name }}
-        </div>
-        <button class="a-btn-content text-primary">
-          <AMenu  trigger="hover">
+        <NuxtLink :to="`/players/${player.id}`" class="a-card-body a-card-spacer block text-high-emphasis">
+          <AMenu trigger="hover">
             <PlayerPreview class="p-4" :player-id="player.id" />
           </AMenu>
-          Preview
-        </button>
-      </NuxtLink>
+          <div class="font-medium">
+            <span>
+              {{ player.first_name }}
+              {{ player.last_name }}
+            </span>
+            <div class="text-sm text-medium-emphasis">
+              {{ player.team_name }}
+            </div>
+          </div>
+        </NuxtLink>
+      </ACard>
     </div>
     <div class="text-medium-emphasis mt-6">{{ total }} total players</div>
   </div>
