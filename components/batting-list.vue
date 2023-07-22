@@ -23,13 +23,13 @@ const statGroups = computed(() => [
 
 <template>
   <!-- eslint-disable vue/require-v-for-key -->
-  <div class="grid grid-cols-5 max-w-sm theme.surface py-3 rounded">
-    <div class="text-sm font-bold uppercase text-gray-600">Rating</div>
-    <div class="text-sm font-bold uppercase text-gray-600 grid justify-items-end">Overall</div>
-    <div class="text-sm font-bold uppercase text-gray-600 grid justify-items-end">Vs L</div>
-    <div class="text-sm font-bold uppercase text-gray-600 grid justify-items-end">Vs R</div>
-    <div class="text-sm font-bold uppercase text-gray-600 grid justify-items-end">Pot.</div>
-    <div>
+  <div class="grid grid-cols-5 max-w-sm theme.surface py-3 rounded text-medium-emphasis">
+    <div class="text-sm font-bold uppercase">Rating</div>
+    <div class="text-sm font-bold uppercase grid justify-items-end">Overall</div>
+    <div class="text-sm font-bold uppercase grid justify-items-end">Vs L</div>
+    <div class="text-sm font-bold uppercase grid justify-items-end">Vs R</div>
+    <div class="text-sm font-bold uppercase grid justify-items-end">Pot.</div>
+    <div class="text-high-emphasis">
       <div>contact</div>
       <div>gap</div>
       <div>power</div>

@@ -5,9 +5,7 @@ const search = refDebounced(searchQuery, 300);
 const team = useRouteQuery<string>("team", "any");
 function resetFilters() {
   searchQuery.value = "";
-  team.value = "any";
 }
-team.value = "any";
 
 const { data: total } = useLazyFetch("/api/players-total", { server: false });
 await Promise.all([
@@ -20,14 +18,35 @@ await Promise.all([
   }),
   useFetch("/api/teams", {
     key: "teams",
+    transform(data) {
+      return data.map((team) => ({
+        title: team.name,
+        value: team.name,
+        id: `team-option-${team.id}`,
+        apiValue: team.id
+      }));
+    },
   }),
 ]);
-const { data: players } = useNuxtData("players");
-const { data: teams } = useNuxtData("teams");
-const teamOptions = computed(() => [
-  { id: "any", name: "Any" },
-  ...teams.value,
-]);
+
+const { data: players } = useNuxtData("players")
+const { data: teams } = useNuxtData("teams")
+
+const anyValue = {
+  value: "Any",
+  title: "Any",
+  id: "team-option-any",
+  apiValue: 'any'
+};
+const selectedTeam = ref(anyValue.value);
+const teamApiValueMap = teams.value?.reduce((acc, team) => {
+  acc[team.value] = team.apiValue;
+  return acc;
+}, {});
+watch(selectedTeam, (selected) => {
+  team.value = teamApiValueMap[selected] || "any";
+});
+const teamOptions = [anyValue, ...teams.value];
 function preloadPlayer(id) {
   const playerKey = `player_${id}`;
   const { data: player } = useNuxtData(playerKey);
@@ -45,26 +64,21 @@ function preloadPlayer(id) {
         North American Baseball Association
       </h1>
       <div class="md:(col-span-2)">
-        <BaseInput
+        <AInput
           id="search"
           v-model="searchQuery"
-          block
           label="Search for players"
-          type="search"
-          name="search"
-          placeholder="Search"
-          icon="i-tabler-search"
+          prepend-inner-icon="i-tabler-search"
         />
       </div>
       <div class="md:col-start-4">
-        <BaseSelect
-          v-model="team"
-          class="col-span-3"
+        <ASelect
+          id="team"
+          v-model="selectedTeam"
           label="Team"
-          value-attribute="id"
-          option-attribute="name"
           :options="teamOptions"
-        />
+        >
+        </ASelect>
       </div>
       <button
         class="theme.button-text justify-self-start"
@@ -77,10 +91,10 @@ function preloadPlayer(id) {
       ></div>
       <NuxtLink
         v-for="player of players"
-        :key="player.id"
+        :key="`list-${player.id}`"
         :to="`/players/${player.id}`"
         prefetch
-        class="hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
+        class="text-black hover:(bg-gray-50 theme.border shadow-sm) transition duration-50 border-1 border-transparent rounded px-2.5 py-1.5 focus:ring ring-blue-900"
         @mouseover.once="() => preloadPlayer(player.id)"
       >
         <div class="font-medium">
@@ -89,39 +103,17 @@ function preloadPlayer(id) {
             {{ player.last_name }}
           </span>
         </div>
-        <div class="text-sm text-gray-600">
+        <div class="text-sm text-medium-emphasis">
           {{ player.team_name }}
         </div>
-        <ClientOnly>
-          <template #fallback>
-            <button class="theme.button-text opacity-70 bg-transparent px-0">
-              Preview
-            </button>
-          </template>
-          <HeadlessPopover class="relative">
-            <HeadlessPopoverButton>
-              <button class="theme.button-text opacity-70 bg-transparent px-0">
-                Preview
-              </button>
-            </HeadlessPopoverButton>
-            <transition
-              enter-active-class="transition duration-200 ease-out"
-              enter-from-class="translate-y-1 opacity-0"
-              enter-to-class="translate-y-0 opacity-100"
-              leave-active-class="transition duration-150 ease-in"
-              leave-from-class="translate-y-0 opacity-100"
-              leave-to-class="translate-y-1 opacity-0"
-            >
-              <HeadlessPopoverPanel
-                class="bg-white theme.border border-1 absolute z-10 left-1/2 -translate-x-1/2 transform p-3 w-sm shadow rounded"
-              >
-                <PlayerPreview class="p-4" :player-id="player.id" />
-              </HeadlessPopoverPanel>
-            </transition>
-          </HeadlessPopover>
-        </ClientOnly>
+        <button class="a-btn-content text-primary">
+          <AMenu  trigger="hover">
+            <PlayerPreview class="p-4" :player-id="player.id" />
+          </AMenu>
+          Preview
+        </button>
       </NuxtLink>
     </div>
-    <div class="text-gray-600 mt-6">{{ total }} total players</div>
+    <div class="text-medium-emphasis mt-6">{{ total }} total players</div>
   </div>
 </template>

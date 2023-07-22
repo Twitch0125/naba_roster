@@ -1,6 +1,6 @@
 <template>
   <Html
-    class="font-sans theme.text-primary bg-white [&_*]:(selection:(bg-primary-bg text-primary))"
+    class="font-sans [&_*]:(selection:(bg-primary-bg text-primary))"
   ></Html>
   <NuxtPage />
 </template>

@@ -1,18 +1,23 @@
 <script setup></script>
 
 <template>
-  <form
-    id="form"
-    class="font-sans max-w-lg mx-auto space-y-6 theme.surface p-6 theme.border border-1 rounded shadow-lg shadow-gray/20"
-    action="/api/csv"
-    method="POST"
-    enctype="multipart/form-data"
+  <ACard
+    class="max-w-lg mx-auto space-y-6 p-6 border-1 rounded shadow-lg shadow-gray/20"
   >
-    <BaseInput id="file" type="file" label="File" name="file" />
-    <div class="flex justify-end">
-      <button class="theme.button rounded">Submit</button>
+    <div class="a-card-body a-card-spacer">
+      <ATypography title="Upload CSV"></ATypography>
+      <form
+        id="form"
+        class=""
+        action="/api/csv"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <BaseInput id="file" type="file" label="File" name="file" />
+      </form>
+      <ABtn form="form" type="submit" color="primary">Upload</ABtn>
     </div>
-  </form>
+  </ACard>
 </template>
 
 <style></style>
