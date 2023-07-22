@@ -9,6 +9,7 @@ export default eventHandler(async (event) => {
     //clear out the table
     db.delete(teamsTable).run();
     db.delete(playersTable).run();
+    db.delete(playersFTSTable).run();
     await parseCSV(readbleStream).pipeTo(
       new WritableStream({
         async write(chunk) {

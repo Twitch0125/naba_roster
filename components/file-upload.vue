@@ -13,7 +13,7 @@
         method="POST"
         enctype="multipart/form-data"
       >
-        <BaseInput id="file" type="file" label="File" name="file" />
+        <AInput id="file" type="file" label="File" name="file" />
       </form>
       <ABtn form="form" type="submit" color="primary">Upload</ABtn>
     </div>
