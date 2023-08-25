@@ -64,49 +64,36 @@ function preloadPlayer(id) {
         North American Baseball Association
       </h1>
       <div class="md:(col-span-2)">
-        <AInput
-          id="search"
-          v-model="searchQuery"
-          label="Search for players"
-          prepend-inner-icon="i-tabler-search"
-        />
+        <AInput id="search" v-model="searchQuery" label="Search for players" prepend-inner-icon="i-tabler-search" />
       </div>
       <div class="md:col-start-4">
-        <ASelect
-          id="team"
-          v-model="selectedTeam"
-          label="Team"
-          :options="teamOptions"
-        >
+        <ASelect id="team" v-model="selectedTeam" label="Team" :options="teamOptions">
         </ASelect>
       </div>
       <button class="justify-self-start" @click="() => resetFilters()">
         Clear
       </button>
       <div class="h-0 border-t-1 sm:col-span-3 md:col-span-5"></div>
-      <ACard
-        v-for="player of players"
-        :key="`list-${player.id}`"
-        class="shadow-none hover:(bg-gray-100 shadow-sm)"
-        @mouseover.once="() => preloadPlayer(player.id)"
-      >
-        <NuxtLink
-          :to="`/players/${player.id}`"
-          class="a-card-body a-card-spacer block text-high-emphasis"
-        >
-          <AMenu trigger="hover">
-            <PlayerPreview class="p-4" :player-id="player.id" />
-          </AMenu>
-          <div class="font-medium">
-            <span>
-              {{ player.first_name }}
-              {{ player.last_name }}
-            </span>
-            <div class="text-sm text-medium-emphasis">
-              {{ player.team_name }}
+      <ACard v-for="player of players" :key="`list-${player.id}`" class="shadow-none hover:(bg-gray-100 shadow-sm)"
+        @mouseover.once="() => preloadPlayer(player.id)">
+        <div class="a-card-body a-card-spacer ">
+          <NuxtLink :to="`/players/${player.id}`" class="block text-high-emphasis">
+            <div class="font-medium">
+              <span>
+                {{ player.first_name }}
+                {{ player.last_name }}
+              </span>
+              <div class="text-sm text-medium-emphasis">
+                {{ player.team_name }}
+              </div>
             </div>
-          </div>
-        </NuxtLink>
+          </NuxtLink>
+          <ABtn variant="light">Preview
+            <AMenu :persist="true">
+              <PlayerPreview class="p-4" :player-id="player.id" />
+            </AMenu>
+          </ABtn>
+        </div>
       </ACard>
     </div>
     <div class="text-medium-emphasis mt-6">{{ total }} total players</div>
