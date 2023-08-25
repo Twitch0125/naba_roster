@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { P } from "drizzle-orm/db.d-187282be";
 import { PlayerFull } from "~/server/utils/db";
 const props = defineProps<{ playerId: number | string }>();
 const playerKey = `player_${props.playerId}`;

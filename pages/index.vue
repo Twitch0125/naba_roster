@@ -51,7 +51,7 @@ function preloadPlayer(id) {
   const playerKey = `player_${id}`;
   const { data: player } = useNuxtData(playerKey);
 
-  !player.value &&
+  if (!player.value)
     useFetch(`/api/player/${id}`, {
       key: playerKey,
     });
@@ -90,7 +90,10 @@ function preloadPlayer(id) {
         class="shadow-none hover:(bg-gray-100 shadow-sm)"
         @mouseover.once="() => preloadPlayer(player.id)"
       >
-        <NuxtLink :to="`/players/${player.id}`" class="a-card-body a-card-spacer block text-high-emphasis">
+        <NuxtLink
+          :to="`/players/${player.id}`"
+          class="a-card-body a-card-spacer block text-high-emphasis"
+        >
           <AMenu trigger="hover">
             <PlayerPreview class="p-4" :player-id="player.id" />
           </AMenu>

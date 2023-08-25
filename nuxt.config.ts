@@ -6,8 +6,8 @@ export default defineNuxtConfig({
   anu: {
     themes: {
       light: {
-        cssVars:{
-          'body-bg-c': '255, 100%, 100%'
+        cssVars: {
+          "body-bg-c": "255, 100%, 100%",
         },
         colors: {
           primary: "122.14deg, 26.42%, 20.78%",
