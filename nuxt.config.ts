@@ -1,6 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { 
+    enabled: true,
+    vscode: {
+      port: 8080,
+      reuseExistingServer: true,
+    }
+   },
+  
   modules: ["@unocss/nuxt", "@vueuse/nuxt", "nuxt-headlessui", "@anu-vue/nuxt"],
   css: ["@unocss/reset/tailwind.css"],
   anu: {
